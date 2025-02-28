@@ -1,0 +1,193 @@
+.container-about-us {
+  width: 95%;
+  background-color: #973a4b;
+  margin: 0 auto;
+  padding: 30px;
+  margin-top: 35px;
+  @media (min-width: 1080px) {
+    width: 370px;
+    margin: 0;
+  }
+  &__citation {
+    font-size: 14px;
+    color: white;
+    padding-bottom: 30px;
+    p {
+      font-size: 10px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      row-gap: 10px;
+      @media (min-width: 1080px) {
+        font-size: 16px;
+      }
+    }
+    i {
+      display: block;
+      font-size: 10px;
+      @media (min-width: 1080px) {
+        font-size: 12px;
+      }
+    }
+  }
+  &__title {
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      color: white;
+      font-weight: 400;
+      text-transform: uppercase;
+      @media (min-width: 1080px) {
+        font-size: 24px;
+      }
+    }
+  }
+  &__description {
+    p {
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 22px;
+      color: white;
+      @media (min-width: 1080px) {
+        font-size: 14px;
+        line-height: 28px;
+      }
+    }
+  }
+}
+
+.container-contactUsCourse {
+  background: url("https://506consulting.com//sites/default/files/gbb-uploads/bg-11.jpg")
+    center/cover repeat;
+    &-container{
+    padding: 35px 0;
+    @media (min-width: 1080px) {
+      width: 79%;
+      margin: 0 auto;
+      display: flex;
+      column-gap: 30px;
+      padding: 60px 0;
+    }
+  }
+  &--form {
+    width: 92%;
+    margin: 0 auto;
+    box-shadow: 0px 4px 26px 3px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 6px;
+    padding: 30px;
+    @media (min-width: 1080px) {
+      width: 47%;
+      margin: 0;
+    }
+    h4 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 32px;
+      text-transform: uppercase;
+      padding-bottom: 30px;
+      @media (min-width: 1080px) {
+        font-size: 24px;
+      }
+    }
+    .form-item {
+      @media (min-width: 1080px) {
+        margin-bottom: 30px;
+      }
+      input {
+        width: 100%;
+        padding: 5px 10px 5px 0;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        height: 36px;
+        color: #787474;
+        &::placeholder {
+          color: #787474;
+          font-size: 14px;
+        }
+      }
+    }
+    .submit {
+      margin-top: 30px;
+      input {
+        font-size: 12px;
+        font-weight: 500;
+        padding: 0 35px;
+        position: relative;
+        display: inline-block;
+        line-height: 38px;
+        z-index: 1;
+        text-transform: uppercase;
+        background: #973a4b;
+        color: #fff;
+        letter-spacing: 1px;
+        border: none;
+        border-radius: 50px;
+        width: fit-content;
+        margin: 0 auto;
+        display: block;
+      }
+    }
+  }
+  &--course-free {
+    width: 92%;
+    margin: 0 auto;
+    padding-top: 10px;
+    &__info {
+      h4 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 400;
+        padding-top: 5px;
+        padding-bottom: 12px;
+        text-transform: uppercase;
+        @media (min-width: 1080px) {
+          font-size: 24px;
+        }
+      }
+      p {
+        margin: 0;
+      }
+      &__iconFuture {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px 5px;
+        padding-top: 50px;
+        &--icon {
+          width: 100%;
+          display: flex;
+          column-gap: 10px;
+          align-items: center;
+          @media (min-width: 1080px) {
+            width: 49%;
+          }
+          svg {
+            width: 22px;
+            height: 22px;
+            background-color: #973a4b;
+            border-radius: 3px;
+            padding: 13px;
+            path {
+              fill: white;
+            }
+          }
+          .container-iconFuture {
+            &__title {
+              padding: 0;
+              margin: 0;
+              h5 {
+                margin: 0;
+                font-size: 24px;
+              }
+            }
+            &__description {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

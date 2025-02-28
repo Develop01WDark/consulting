@@ -1,0 +1,75 @@
+
+.swiper.swiper-initialized .swiper-wrapper{
+    transition-timing-function: linear !important;
+}
+@media (min-width: 1250px) {
+  .hamburger.is-lg {
+    display: none;
+  }
+}
+.hamburger {
+    position: relative;
+    width: 1em;
+    height: 1em;
+    font-size: inherit;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  /* Variación .is-lg */
+  .hamburger.is-lg {
+    font-size: 2rem;
+  }
+  
+  /* Línea base de la hamburguesa */
+  .hamburger-line {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    height: 0.125em;
+    border-radius: 0.125em;
+    background: currentColor;
+    transition: inherit;
+  }
+  
+  /* Primera línea */
+  .hamburger-line:nth-child(1) {
+    top: 0.125em;
+  }
+  
+  /* Segunda línea */
+  .hamburger-line:nth-child(2) {
+    top: 0.438em;
+  }
+  
+  /* Tercera línea */
+  .hamburger-line:nth-child(3) {
+    top: 0.75em;
+    width: 0.625em;
+  }
+  
+  /* Estados “is-active” o “w--open” */
+  /* Afectan la primera línea */
+  .hamburger.is-active .hamburger-line:nth-child(1),
+  .w-nav-button.w--open .hamburger-line:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotateZ(-135deg);
+  }
+  
+  /* Afectan la segunda línea */
+  .hamburger.is-active .hamburger-line:nth-child(2),
+  .w-nav-button.w--open .hamburger-line:nth-child(2) {
+    right: 50%;
+    width: 0;
+  }
+  
+  /* Afectan la tercera línea */
+  .hamburger.is-active .hamburger-line:nth-child(3),
+  .w-nav-button.w--open .hamburger-line:nth-child(3) {
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%) rotateZ(135deg);
+  }
+img{
+    max-width: 100%;
+}

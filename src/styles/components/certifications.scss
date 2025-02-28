@@ -1,0 +1,49 @@
+.container-certifications {
+  width: 95%;
+  margin: 0 auto;
+  @media (min-width: 1080px) {
+    width: 79%;
+  }
+  h2 {
+    margin: 0;
+    text-align: center;
+    font-weight: 400;
+    font-size: 15px;
+    text-transform: uppercase;
+    padding-bottom: 30px;
+    @media (min-width: 1080px) {
+      padding: 40px;
+      font-size: 24px;
+      
+    }
+  }
+  &-infoImg{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px 5px;
+    @media (min-width: 1080px){
+      justify-content: space-between;
+    }
+    &_item{
+        max-width: 340px;
+        @media (min-width: 1080px){
+          max-width: none;
+          width: 24%;
+        }
+        &--title{
+            h5{
+                margin: 0;
+                text-align: center;
+                font-weight: 300;
+                font-size: 19px;
+                padding: 10px 0;
+                @media (min-width: 1080px){
+                  padding: 20px 0;
+                  font-size: 22px;
+                }
+            }
+        }
+    }
+  }
+}
