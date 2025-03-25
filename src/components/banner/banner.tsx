@@ -1,4 +1,3 @@
-import React from "react";
 import Mha from "../../img/mha.jpg";
 import Imagen2 from "../../img/demon.jpg";
 import Imagen3 from "../../img/dragon.jpg";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Banner, { bannerData } from "./banner";
 import {
   Navigation,
@@ -10,6 +10,7 @@ import {
   EffectCoverflow,
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperType } from 'swiper';
 
 import "swiper/swiper-bundle.css";
 
@@ -27,7 +28,7 @@ export default function BannerSlider() {
     loop: true,
     autoplay: { delay: 2600, disableOnInteraction: false },
     speed: 1000,
-    onSlideChange: (swiper) => {
+    onSlideChange: (swiper: SwiperType) => {
       setCurrentIndex(swiper.realIndex);
     }
   };
