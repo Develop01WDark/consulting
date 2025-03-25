@@ -1,0 +1,108 @@
+@media (min-width: 1080px) {
+  .container-about-us-services {
+    width: 79%;
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    -moz-column-gap: 30px;
+         column-gap: 30px;
+  }
+}
+
+.container-about-us-services__icon-future {
+  position: relative;
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+@media (min-width: 1080px) {
+  .container-about-us-services__icon-future {
+    width: 60%;
+    margin: 0;
+    padding: 60px 0 0 0;
+    justify-content: start;
+    row-gap: 30px;
+  }
+}
+.container-about-us-services__icon-future__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+@media (min-width: 1080px) {
+  .container-about-us-services__icon-future__container {
+    row-gap: 20px;
+  }
+}
+.container-about-us-services__icon-future__info {
+  width: 45%;
+}
+.container-about-us-services__icon-future__info svg {
+  width: 42px;
+  height: 26px;
+  position: absolute;
+}
+@media (min-width: 1080px) {
+  .container-about-us-services__icon-future__info svg {
+    width: 60px;
+    height: 40px;
+  }
+}
+.container-about-us-services__icon-future__info .container-iconFuture__title h5 {
+  margin: 0;
+  font-weight: 400;
+}
+@media (min-width: 1080px) {
+  .container-about-us-services__icon-future__info .container-iconFuture__title h5 {
+    font-size: 20px;
+  }
+}
+.container-about-us-services__icon-future h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+@media (min-width: 1080px) {
+  .container-about-us-services__icon-future h2 {
+    height: -moz-fit-content;
+    height: fit-content;
+    margin: 0;
+    text-align: start;
+    font-size: 24px;
+  }
+}
+
+.container-iconFuture__title {
+  padding-left: 42px;
+  margin-bottom: 10px;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+}
+@media (min-width: 1080px) {
+  .container-iconFuture__title {
+    padding-left: 65px;
+    margin-bottom: 19px;
+  }
+}
+.container-iconFuture__description h5 {
+  margin: 0;
+  font-weight: 300;
+  font-size: 11px;
+  line-height: 18px;
+}
+@media (min-width: 992px) {
+  .container-iconFuture__description h5 {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+}/*# sourceMappingURL=iconFuture.css.map */
