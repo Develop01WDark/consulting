@@ -30,6 +30,7 @@
                 font-size: 18px;
                 line-height: 32px;
                 font-weight: 600;
+                text-transform: uppercase;
                 @media (min-width: 1080px){
                     font-size: 24px;
                     padding-bottom: 30px;
@@ -78,6 +79,12 @@
                     h5{
                         font-size: 14px;
                         color: #56585C;
+                    }
+                }
+                &__icon{
+                    img{
+                        max-width: 50px;
+                        max-height: 50px;
                     }
                 }
             }

@@ -1,51 +1,52 @@
+import { useEffect, useState } from "react";
 import AboutUs from "./about-us-courses";
-// import ContactUsCourses from "./contact-us-courses"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faChalkboardUser,
-  faEarthAmericas,
-  faLightbulb,
-  faSchool,
-} from "@fortawesome/free-solid-svg-icons";
-import IconFuture from "./iconFuture";
-// import AboutUs from "./about-us-services"
 
-export default function AboutUsServices() {
+export default function AboutUsServices({ language = "en" }) {
+  const [aboutUsData, setAboutUsData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+        const response = await fetch(`${apiBaseUrl}/${language}/json/node/1`);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const data = await response.json();
+
+        const aboutUsSection = data?.fields?.field_components_group
+          ?.flatMap(group => group.field_components || [])
+          ?.find(component => component.paragraph_type === "about_us_services");
+
+        setAboutUsData(aboutUsSection);
+      } catch (error) {
+        console.error("Error fetching About Us Services data:", error);
+      }
+    };
+
+    fetchData();
+  }, [language]);
+
+  if (!aboutUsData) return null;
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   return (
     <div className="container-about-us-services">
-      {/* <ContactUsCourses/> */}
-      <AboutUs />
+      <AboutUs/>
       <div className="container-about-us-services__icon-future">
-        <h2>Queremos que nuestros cursos te inspiren!</h2>
+        <h2>{aboutUsData.field_title}</h2>
         <div className="container-about-us-services__icon-future__container">
-          <div className="container-about-us-services__icon-future__info">
-            <FontAwesomeIcon icon={faSchool} style={{color: '#973a4b'}} />
-            <IconFuture
-              title="Hazlo tu mismo"
-              description="Aprende a organizar tu tiempo de estudio, implica investigar a fondo aplicando la tecnología. en los cursos."
-            />
-          </div>
-          <div className="container-about-us-services__icon-future__info">
-            <FontAwesomeIcon icon={faEarthAmericas} style={{color: '#973a4b'}} />
-            <IconFuture
-              title="Online learning"
-              description="Decidí tu mismo, cuando y donde estudiar."
-            />
-          </div>
-          <div className="container-about-us-services__icon-future__info">
-            <FontAwesomeIcon icon={faLightbulb} style={{color: '#973a4b'}} />
-            <IconFuture
-              title="Networking"
-              description="Ampliá tu red de contactos."
-            />
-          </div>
-          <div className="container-about-us-services__icon-future__info">
-          <FontAwesomeIcon icon={faChalkboardUser} style={{color: '#973a4b'}} />
-            <IconFuture
-              title="Certificación Internacional"
-              description="Certificate en Metodologías Ágiles, Ciberseguridad, Marketing Digital, Lean Six Sigma y sé un profesional más competitivo."
-            />
-          </div>
+          {aboutUsData.field_about_us_services_item?.map((item) => (
+            <div key={item.paragraph_id} className="container-about-us-services__icon-future__info">
+              <img 
+                src={`${apiBaseUrl}${item?.field_icon?.[0]?.src}`}
+                alt={item.field_icon[0]?.label || "Icono"} 
+                width={50} 
+                height={50} 
+              />
+              <div className="icon-future__content">
+                <h3>{item.field_icon_title}</h3>
+                <div dangerouslySetInnerHTML={{ __html: item.field_icon_description }} />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -1,12 +1,34 @@
-import {
-  Navigation,
-  Pagination,
-  A11y,
-  Autoplay,
-} from "swiper/modules";
+import { useEffect, useState } from "react";
+import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function Allies() {
+export default function Allies({ language = "en" }) {
+  const [alliesData, setAlliesData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+        const response = await fetch(`${apiBaseUrl}/${language}/json/node/1`);
+        if (!response.ok)
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        const data = await response.json();
+
+        const alliesSection = data?.fields?.field_components_group
+          ?.flatMap((group) => group.field_components || [])
+          ?.find((component) => component.paragraph_type === "allies");
+
+        setAlliesData(alliesSection);
+      } catch (error) {
+        console.error("Error fetching Allies data:", error);
+      }
+    };
+
+    fetchData();
+  }, [language]);
+
+  if (!alliesData) return null;
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   return (
     <div className="container-allies">
       <Swiper
@@ -17,42 +39,17 @@ export default function Allies() {
         loop={true}
         speed={3000}
       >
-      <SwiperSlide>
-        <div className="container-img">
-            <img src="https://506consulting.com/sites/default/files/CertiProf-Logo-Full-Color-768x172%20(1).png" alt="img1" width="200" />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="container-img">
-            <img src="https://506consulting.com/sites/default/files/Comptia-logo.svg%20(1).png" alt="img1" width="200" />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="container-img">
-            <img src="https://506consulting.com/sites/default/files/Comptia-logo.svg%20(1).png" alt="img1" width="200" />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="container-img">
-            <img src="https://506consulting.com/sites/default/files/3195-VMEdu.jpeg" alt="img1" width="200" />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="container-img">
-            <img src="https://506consulting.com/sites/default/files/techruptive-logo_color.a8e2980f.png" alt="img1" width="200" />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="container-img">
-            <img src="https://506consulting.com/sites/default/files/Acquia_logo%20copy.png" alt="img1" width="200" />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="container-img">
-            <img src="https://506consulting.com/sites/default/files/Acquia_logo%20copy.png" alt="img1" width="200" />
-        </div>
-      </SwiperSlide>
-
+        {alliesData.field_allies_item?.map((item) => (
+          <SwiperSlide key={item.paragraph_id}>
+            <div className="container-img">
+              <img
+                src={`${apiBaseUrl}${item?.field_image?.[0]?.src}`}
+                alt={item.field_image[0]?.label || "Aliado"}
+                width="200"
+              />
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

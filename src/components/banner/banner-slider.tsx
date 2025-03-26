@@ -1,5 +1,6 @@
-import { useState } from "react";
-import Banner, { bannerData } from "./banner";
+import { useEffect, useState } from "react";
+import Banner from "./banner";
+import { fetchBannerData } from "./banner";
 import {
   Navigation,
   Pagination,
@@ -10,16 +11,30 @@ import {
   EffectCoverflow,
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Swiper as SwiperType } from 'swiper';
+import { Swiper as SwiperType } from "swiper";
 
 import "swiper/swiper-bundle.css";
 
-export default function BannerSlider() {
-  // Elegir un efecto al azar para comenzar
-  const [effect, setEffect] = useState("coverflow");
+interface BannerData {
+  imgSrc: string;
+  subtitle: string;
+  title: string;
+  description: string;
+}
+
+export default function BannerSlider({ language = "en" }: { language?: string }) {
+  const [effect, setEffect] = useState<"coverflow" | "fade" | "creative">("coverflow");
   const [currentIndex, setCurrentIndex] = useState(0);
-  
-  // Configuración común para todos los efectos
+  const [banners, setBanners] = useState<BannerData[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      const data = await fetchBannerData(language);
+      setBanners(Array.isArray(data) ? data : []);
+    }
+    loadData();
+  }, [language]);
+
   const commonConfig = {
     modules: [Navigation, Pagination, A11y, Autoplay],
     slidesPerView: 1,
@@ -28,96 +43,62 @@ export default function BannerSlider() {
     loop: true,
     autoplay: { delay: 2600, disableOnInteraction: false },
     speed: 1000,
-    onSlideChange: (swiper: SwiperType) => {
-      setCurrentIndex(swiper.realIndex);
-    }
+    onSlideChange: (swiper: SwiperType) => setCurrentIndex(swiper.realIndex),
   };
-  
-  // Cambiar al siguiente efecto
+
   const changeEffect = () => {
-    if (effect === "coverflow") {
-      setEffect("fade");
-    } else if (effect === "fade") {
-      setEffect("creative");
-    } else {
-      setEffect("coverflow");
-    }
-  };
-
-  // Renderizar el slider actual según el efecto
-  const renderCurrentSlider = () => {
-    const renderSlides = () => {
-      return bannerData.map((banner, index) => (
-        <SwiperSlide key={index}>
-          <Banner 
-            imgSrc={banner.imgSrc}
-            subtitle={banner.subtitle}
-            title={banner.title}
-            description={banner.description}
-          />
-        </SwiperSlide>
-      ));
-    };
-
-    switch (effect) {
-      case "coverflow":
-        return (
-          <Swiper
-            {...commonConfig}
-            modules={[...commonConfig.modules, EffectCoverflow]}
-            effect="coverflow"
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: false,
-            }}
-            onSlideChangeTransitionEnd={() => changeEffect()}
-            initialSlide={currentIndex}
-          >
-            {renderSlides()}
-          </Swiper>
-        );
-      case "fade":
-        return (
-          <Swiper
-            {...commonConfig}
-            modules={[...commonConfig.modules, EffectFade]}
-            effect="fade"
-            fadeEffect={{
-              crossFade: true
-            }}
-            onSlideChangeTransitionEnd={() => changeEffect()}
-            initialSlide={currentIndex}
-          >
-            {renderSlides()}
-          </Swiper>
-        );
-      case "creative":
-        return (
-          <Swiper
-            {...commonConfig}
-            modules={[...commonConfig.modules, EffectCreative]}
-            effect="creative"
-            creativeEffect={{
-              prev: { shadow: false, translate: ["-120%", 0, -500] },
-              next: { shadow: false, translate: ["120%", 0, -500] },
-            }}
-            onSlideChangeTransitionEnd={() => changeEffect()}
-            initialSlide={currentIndex}
-          >
-            {renderSlides()}
-          </Swiper>
-        );
-      default:
-        return null;
-    }
+    setEffect(prevEffect => 
+      prevEffect === "coverflow" ? "fade" : prevEffect === "fade" ? "creative" : "coverflow"
+    );
   };
 
   return (
     <div className="container-bannerSlider">
-      {renderCurrentSlider()}
+      <Swiper
+        {...commonConfig}
+        modules={[
+          ...commonConfig.modules, 
+          effect === "coverflow" ? EffectCoverflow : 
+          effect === "fade" ? EffectFade : 
+          EffectCreative
+        ]}
+        effect={effect}
+        {...(effect === "coverflow" && {
+          coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+          }
+        })}
+        {...(effect === "fade" && {
+          fadeEffect: { crossFade: true }
+        })}
+        {...(effect === "creative" && {
+          creativeEffect: {
+            prev: { shadow: false, translate: ["-120%", 0, -500] },
+            next: { shadow: false, translate: ["120%", 0, -500] },
+          }
+        })}
+        onSlideChangeTransitionEnd={changeEffect}
+        initialSlide={currentIndex}
+      >
+        {banners.length > 0 ? (
+          banners.map((banner, index) => (
+            <SwiperSlide key={index}>
+              <Banner 
+                imgSrc={banner.imgSrc}
+                subtitle={banner.subtitle}
+                title={banner.title}
+                description={banner.description}
+              />
+            </SwiperSlide>
+          ))
+        ) : (
+          <p>Cargando...</p>
+        )}
+      </Swiper>
     </div>
   );
 }
