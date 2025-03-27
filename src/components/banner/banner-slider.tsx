@@ -6,9 +6,9 @@ import {
   Pagination,
   A11y,
   Autoplay,
-  EffectCreative,
-  EffectFade,
   EffectCoverflow,
+  EffectFade,
+  EffectCreative,
 } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper";
@@ -22,10 +22,10 @@ interface BannerData {
   description: string;
 }
 
-export default function BannerSlider({ language = "en" }: { language?: string }) {
+export default function BannerSlider({ language = "es" }: { language?: string }) {
   const [effect, setEffect] = useState<"coverflow" | "fade" | "creative">("coverflow");
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [banners, setBanners] = useState<BannerData[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     async function loadData() {
@@ -54,38 +54,38 @@ export default function BannerSlider({ language = "en" }: { language?: string })
 
   return (
     <div className="container-bannerSlider">
-      <Swiper
-        {...commonConfig}
-        modules={[
-          ...commonConfig.modules, 
-          effect === "coverflow" ? EffectCoverflow : 
-          effect === "fade" ? EffectFade : 
-          EffectCreative
-        ]}
-        effect={effect}
-        {...(effect === "coverflow" && {
-          coverflowEffect: {
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: false,
-          }
-        })}
-        {...(effect === "fade" && {
-          fadeEffect: { crossFade: true }
-        })}
-        {...(effect === "creative" && {
-          creativeEffect: {
-            prev: { shadow: false, translate: ["-120%", 0, -500] },
-            next: { shadow: false, translate: ["120%", 0, -500] },
-          }
-        })}
-        onSlideChangeTransitionEnd={changeEffect}
-        initialSlide={currentIndex}
-      >
-        {banners.length > 0 ? (
-          banners.map((banner, index) => (
+      {banners.length > 0 ? (
+        <Swiper
+          {...commonConfig}
+          modules={[
+            ...commonConfig.modules,
+            effect === "coverflow" ? EffectCoverflow : 
+            effect === "fade" ? EffectFade : 
+            EffectCreative
+          ]}
+          effect={effect}
+          {...(effect === "coverflow" && {
+            coverflowEffect: {
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: false,
+            }
+          })}
+          {...(effect === "fade" && {
+            fadeEffect: { crossFade: true }
+          })}
+          {...(effect === "creative" && {
+            creativeEffect: {
+              prev: { shadow: false, translate: ["-120%", 0, -500] },
+              next: { shadow: false, translate: ["120%", 0, -500] },
+            }
+          })}
+          onSlideChangeTransitionEnd={changeEffect}
+          initialSlide={currentIndex}
+        >
+          {banners.map((banner, index) => (
             <SwiperSlide key={index}>
               <Banner 
                 imgSrc={banner.imgSrc}
@@ -94,11 +94,11 @@ export default function BannerSlider({ language = "en" }: { language?: string })
                 description={banner.description}
               />
             </SwiperSlide>
-          ))
-        ) : (
-          <p>Cargando...</p>
-        )}
-      </Swiper>
+          ))}
+        </Swiper>
+      ) : (
+        <p>Cargando...</p>
+      )}
     </div>
   );
 }

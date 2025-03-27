@@ -35,6 +35,7 @@ export default function Header() {
               <li> <FontAwesomeIcon icon={faScrewdriverWrench} /> Servicios</li>
               <li> <FontAwesomeIcon icon={faComment} /> Consultorias</li>
               <li> <FontAwesomeIcon icon={faEnvelope} /> Contacto</li>
+              <li> E-commerce </li>
             </ul>
           </div>
           <div className="container-header__info--search">

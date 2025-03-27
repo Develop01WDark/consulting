@@ -1,88 +1,66 @@
 import { useEffect, useState } from "react";
 
-// Función para obtener los datos del banner
+
 export async function fetchBannerData(language = "en") {
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const url = `${apiBaseUrl}/${language}/json/node/1`;
+
+
+
   try {
-    const response = await fetch(`${apiBaseUrl}/${language}/json/node/1`);
-    if (!response.ok) throw new Error("Error fetching data");
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Error fetching data: ${response.statusText}`);
 
     const data = await response.json();
 
-    // Buscar el grupo de componentes con "banner_slider"
-    const bannerComponent = data.fields.field_components_group.find((group) =>
-      group.field_components.some(
-        (component) => component.paragraph_type === "banner_slider"
-      )
-    );
 
-    if (bannerComponent) {
-      return bannerComponent.field_components
-        .filter((component) => component.paragraph_type === "banner_slider")
-        .map((banner) => ({
-          imgSrcs: banner.field_image?.map((img) => img.src) || [],
-          subtitle: banner.field_subtitle || "",
-          title: banner.field_title || "",
-          description: banner.field_description?.replace(/<[^>]*>?/gm, "") || "",
-        }));
+    if (!data.fields?.field_components_group) {
+      console.warn("⚠ No se encontraron datos de banner.");
+      return [];
     }
+
+
+    const bannerComponent = data.fields.field_components_group
+      .flatMap(group => group.field_components)
+      .find(component => component.paragraph_type === "banner_slider");
+
+    if (!bannerComponent || !bannerComponent.field_banner_slider_item) {
+      console.warn("⚠ No hay elementos en 'field_banner_slider_item'.");
+      return [];
+    }
+
+
+    const banners = bannerComponent.field_banner_slider_item.map(item => ({
+      imgSrc: `${apiBaseUrl}${item.field_image?.[0]?.src || ""}`, 
+      subtitle: item.field_subtitle || "",
+      title: item.field_title || "",
+      description: item.field_description?.replace(/<[^>]*>?/gm, "") || "", 
+    }));
+
+
+    return banners;
   } catch (error) {
     console.error("Error fetching banner data:", error);
+    return [];
   }
-  return [];
 }
 
-// Componente Banner
-export default function Banner({ language = "en" }: { language?: string }) {
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-  const [banners, setBanners] = useState<
-    { imgSrcs: string[]; subtitle: string; title: string; description: string }[]
-  >([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    const loadData = async () => {
-      const data = await fetchBannerData(language);
-      setBanners(data);
-    };
-    loadData();
-  }, [language]);
-
-  // Cambia la imagen automáticamente cada 3 segundos
-  useEffect(() => {
-    if (banners.length > 0 && banners[0].imgSrcs.length > 1) {
-      const interval = setInterval(() => {
-        setCurrentIndex(
-          (prevIndex) => (prevIndex + 1) % banners[0].imgSrcs.length
-        );
-      }, 3000);
-      return () => clearInterval(interval);
-    }
-  }, [banners]);
-
-  if (banners.length === 0) {
-    return <p>Cargando...</p>;
-  }
-
+export default function Banner({ imgSrc, subtitle, title, description }) {
   return (
     <div className="banner">
       <div className="banner--img">
-        <img
-          src={`${apiBaseUrl}${banners[0].imgSrcs[currentIndex]}`}
-          alt="banner"
-          width="100%"
-          className="banner-image"
-        />
+        <img src={imgSrc} alt="banner" width="100%" className="banner-image" />
       </div>
       <div className="banner--info">
         <div className="banner--info--subtitle">
-          <h4>{banners[0].subtitle}</h4>
+          <h4>{subtitle}</h4>
         </div>
         <div className="banner--info--title">
-          <h1>{banners[0].title}</h1>
+          <h1>{title}</h1>
         </div>
         <div className="banner--info--description">
-          <p>{banners[0].description}</p>
+          <p>{description}</p>
         </div>
       </div>
     </div>
