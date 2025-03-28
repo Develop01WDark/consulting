@@ -1,0 +1,48 @@
+.ecommerce-container {
+    background-color: #ffffff;
+    color: #333;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .ecommerce-header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .products {
+    margin-top: 20px;
+  }
+  
+  .product-list {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .product-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #fff5f5;
+  }
+  
+  .tag {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .price {
+    color: #c0392b;
+    font-weight: bold;
+  }
+  
+  .rating {
+    color: #f39c12;
+  }
+  
