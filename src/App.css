@@ -1,6 +1,80 @@
+/*Loading*/
 
-.swiper.swiper-initialized .swiper-wrapper{
-    transition-timing-function: linear !important;
+.vertical-centered-box .loader-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  margin-left: -60px;
+  margin-top: -60px;
+}
+.vertical-centered-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.vertical-centered-box:after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em;
+}
+
+.vertical-centered-box .content {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 0;
+}
+
+.loader-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(169, 50, 38, 0.3);
+  margin-left: -60px;
+  margin-top: -60px;
+}
+
+.loader-line-mask {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60px;
+  height: 120px;
+  margin-left: -60px;
+  margin-top: -60px;
+  overflow: hidden;
+  transform-origin: 60px 60px;
+  animation: rotate 1.2s infinite linear;
+}
+
+.loader-line-mask .loader-line {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(231, 76, 60, 0.5);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.swiper.swiper-initialized .swiper-wrapper {
+  transition-timing-function: linear !important;
 }
 @media (min-width: 1250px) {
   .hamburger.is-lg {
@@ -8,74 +82,75 @@
   }
 }
 .hamburger {
-    position: relative;
-    width: 1em;
-    height: 1em;
-    font-size: inherit;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-  
-  /* Variación .is-lg */
-  .hamburger.is-lg {
-    font-size: 2rem;
-  }
-  
-  /* Línea base de la hamburguesa */
-  .hamburger-line {
-    position: absolute;
-    right: 0;
-    width: 100%;
-    height: 0.125em;
-    border-radius: 0.125em;
-    background: currentColor;
-    transition: inherit;
-  }
-  
-  /* Primera línea */
-  .hamburger-line:nth-child(1) {
-    top: 0.125em;
-  }
-  
-  /* Segunda línea */
-  .hamburger-line:nth-child(2) {
-    top: 0.438em;
-  }
-  
-  /* Tercera línea */
-  .hamburger-line:nth-child(3) {
-    top: 0.75em;
-    width: 0.625em;
-  }
-  
-  /* Estados “is-active” o “w--open” */
-  /* Afectan la primera línea */
-  .hamburger.is-active .hamburger-line:nth-child(1),
-  .w-nav-button.w--open .hamburger-line:nth-child(1) {
-    top: 50%;
-    transform: translateY(-50%) rotateZ(-135deg);
-  }
-  
-  /* Afectan la segunda línea */
-  .hamburger.is-active .hamburger-line:nth-child(2),
-  .w-nav-button.w--open .hamburger-line:nth-child(2) {
-    right: 50%;
-    width: 0;
-  }
-  
-  /* Afectan la tercera línea */
-  .hamburger.is-active .hamburger-line:nth-child(3),
-  .w-nav-button.w--open .hamburger-line:nth-child(3) {
-    top: 50%;
-    width: 100%;
-    transform: translateY(-50%) rotateZ(135deg);
-  }
-img{
-    max-width: 100%;
+  position: relative;
+  width: 1em;
+  height: 1em;
+  font-size: inherit;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Variación .is-lg */
+.hamburger.is-lg {
+  font-size: 2rem;
+}
+
+/* Línea base de la hamburguesa */
+.hamburger-line {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 0.125em;
+  border-radius: 0.125em;
+  background: currentColor;
+  transition: inherit;
+}
+
+/* Primera línea */
+.hamburger-line:nth-child(1) {
+  top: 0.125em;
+}
+
+/* Segunda línea */
+.hamburger-line:nth-child(2) {
+  top: 0.438em;
+}
+
+/* Tercera línea */
+.hamburger-line:nth-child(3) {
+  top: 0.75em;
+  width: 0.625em;
+}
+
+/* Estados “is-active” o “w--open” */
+/* Afectan la primera línea */
+.hamburger.is-active .hamburger-line:nth-child(1),
+.w-nav-button.w--open .hamburger-line:nth-child(1) {
+  top: 50%;
+  transform: translateY(-50%) rotateZ(-135deg);
+}
+
+/* Afectan la segunda línea */
+.hamburger.is-active .hamburger-line:nth-child(2),
+.w-nav-button.w--open .hamburger-line:nth-child(2) {
+  right: 50%;
+  width: 0;
+}
+
+/* Afectan la tercera línea */
+.hamburger.is-active .hamburger-line:nth-child(3),
+.w-nav-button.w--open .hamburger-line:nth-child(3) {
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%) rotateZ(135deg);
+}
+img {
+  max-width: 100%;
 }
 
 /* =========== */
-.sliderFrame, .sliderFrame div {
+.sliderFrame,
+.sliderFrame div {
   box-sizing: content-box;
 }
 
@@ -84,9 +159,10 @@ img{
   margin: 0 auto; /*center-aligned*/
 }
 
-.slider, .slider .sliderInner {
+.slider,
+.slider .sliderInner {
   width: 700px;
-  height: 306px;/* Must be the same size as the slider images */
+  height: 306px; /* Must be the same size as the slider images */
   border-radius: 3px;
 }
 
@@ -94,12 +170,13 @@ img{
   background-color: white;
   position: relative;
   margin: 0 auto; /*center-aligned*/
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
   box-shadow: 0px 1px 5px #999999;
 }
 
 /* the link style (if an image is wrapped by a link) */
-.slider a.imgLink, .slider .video {
+.slider a.imgLink,
+.slider .video {
   z-index: 2;
   cursor: pointer;
   position: absolute;
@@ -121,23 +198,23 @@ img{
   position: absolute;
   width: 100%;
   height: auto;
-  padding: 10px 0;/* 10px will increase the height.*/
+  padding: 10px 0; /* 10px will increase the height.*/
   left: 0px;
   bottom: 0px;
   top: auto;
   overflow: hidden;
   font: bold 14px/20px Arial;
-  color: #EEE;
+  color: #eee;
   text-align: center;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .slider .mc-caption a {
-  color: #FB0;
+  color: #fb0;
 }
 
 .slider .mc-caption a:hover {
-  color: #DA0;
+  color: #da0;
 }
 
 /* ------ built-in navigation bullets wrapper ------*/
@@ -154,14 +231,14 @@ img{
   width: 11px;
   height: 11px;
   font-size: 0;
-  color: White;/*hide the index number in the bullet element*/
+  color: White; /*hide the index number in the bullet element*/
   background: transparent url(bullet.png) no-repeat 0 0;
   display: inline-block;
   /* *display: inline; */
   zoom: 1;
   overflow: hidden;
   cursor: pointer;
-  margin: 0 6px;/* set distance between each bullet*/
+  margin: 0 6px; /* set distance between each bullet*/
 }
 
 .slider .navBulletsWrapper .active {
@@ -169,7 +246,9 @@ img{
 }
 
 /* --------- Others ------- */
-.slider img, .slider>b, .slider a>b {
+.slider img,
+.slider > b,
+.slider a > b {
   position: absolute;
   border: none;
   display: none;
@@ -182,13 +261,15 @@ img{
   left: 0;
 }
 
-.slider>a, .slider video, .slider audio {
+.slider > a,
+.slider video,
+.slider audio {
   display: none;
 }
 
 .slider div {
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 .bgLayer {
@@ -203,7 +284,7 @@ img{
   width: 100%;
   height: 100%;
   object-fit: cover;
-} 
+}
 /*==================*
 /* Configuración general para el contenedor padre */
 .example-1 .swiper-container {

@@ -1,9 +1,52 @@
 import { useEffect, useState } from "react";
 
-export default function Certifications({ language = "en" }) {
-  const [certificationsData, setCertificationsData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+// Definición de interfaces para la estructura de datos
+interface Icon {
+  id: string;
+  type: string;
+  bundle: string;
+  label: string;
+  src: string;
+}
+
+interface CertificationItem {
+  paragraph_id: string;
+  paragraph_type: string;
+  field_icon?: Icon[];
+  field_icon_title?: string;
+  field_icon_description?: string;
+}
+
+interface CertificationComponent {
+  paragraph_id: string;
+  paragraph_type: string;
+  field_certification_item?: CertificationItem[];
+  field_title?: string;
+}
+
+interface ComponentGroup {
+  paragraph_id: string;
+  paragraph_type: string;
+  field_components?: CertificationComponent[];
+}
+
+interface DrupalData {
+  nid?: string;
+  type?: string;
+  title?: string;
+  fields?: {
+    field_components_group?: ComponentGroup[];
+  };
+}
+
+interface CertificationsProps {
+  language?: string;
+}
+
+export default function Certifications({ language = "en" }: CertificationsProps) {
+  const [certificationsData, setCertificationsData] = useState<CertificationComponent | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,17 +71,17 @@ export default function Certifications({ language = "en" }) {
         setError(null);
       } catch (error) {
         console.error("Detailed error fetching Certifications data:", {
-          message: error.message,
-          name: error.name,
-          stack: error.stack
+          message: error instanceof Error ? error.message : "Unknown error",
+          name: error instanceof Error ? error.name : "Unknown",
+          stack: error instanceof Error ? error.stack : "No stack trace"
         });
-        setError(error);
+        setError(error instanceof Error ? error : new Error("Unknown error"));
       } finally {
         setLoading(false);
       }
     };
 
-    const fetchDataForLanguage = async (lang) => {
+    const fetchDataForLanguage = async (lang: string): Promise<DrupalData | null> => {
       const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
       
       // Probar múltiples variaciones de URL
@@ -62,7 +105,7 @@ export default function Certifications({ language = "en" }) {
           console.log(`Response status: ${response.status}`);
 
           if (response.ok) {
-            const data = await response.json();
+            const data = await response.json() as DrupalData;
             console.log("Successful response data:", data);
             return data;
           }
@@ -91,7 +134,9 @@ export default function Certifications({ language = "en" }) {
   if (loading) {
     return <div>Cargando...</div>;
   }
+  
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  
   // Renderizado de certificaciones
   return (
     <div className="container-certifications">
@@ -104,7 +149,7 @@ export default function Certifications({ language = "en" }) {
           >
             <div className="container-certifications-infoImg_item--img">
               <img
-                src= {`${apiBaseUrl}${item?.field_icon?.[0]?.src}`}
+                src={`${apiBaseUrl}${item?.field_icon?.[0]?.src}`}
                 alt={item?.field_icon?.[0]?.label || "Certificación"}
               />
             </div>

@@ -4,17 +4,22 @@
   justify-content: center;
   align-items: center;
 }
+.products li button{
+  background-color: #973a4b !important;
+  border: none;
+  
+}
 
+.products li button svg{
+  fill: white;
+  stroke: white;
+}
 .products ul {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(
-      200px,
-      1fr
-    )
-  );
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
+  padding: 0;
+  justify-content: center;
 }
 
 .products li {
@@ -23,9 +28,15 @@
   gap: 1rem;
   box-shadow: 0 0 10px 10px rgba(0, 0, 0, .1);
   border-radius: 4px;
-  background: #111;
-  color: #fff;
+  background: white;
+  color: #973a4b;
   padding: 1rem;
+  width: 250px;
+  transition: 0.3s ease-in-out;
+}
+
+.products li:hover {
+  transform: scale(1.05);
 }
 
 .products h3 {

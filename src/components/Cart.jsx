@@ -1,5 +1,4 @@
 import './Cart.css'
-
 import { useId } from 'react'
 import { CartIcon, ClearCartIcon } from './Icons.jsx'
 import { useCart } from '../hooks/useCart.js'
@@ -7,18 +6,12 @@ import { useCart } from '../hooks/useCart.js'
 function CartItem ({ thumbnail, price, title, quantity, addToCart }) {
   return (
     <li>
-      <img
-        src={thumbnail}
-        alt={title}
-      />
+      <img src={thumbnail} alt={title} />
       <div>
         <strong>{title}</strong> - ${price}
       </div>
-
       <footer>
-        <small>
-          Qty: {quantity}
-        </small>
+        <small>Qty: {quantity}</small>
         <button onClick={addToCart}>+</button>
       </footer>
     </li>
@@ -28,6 +21,9 @@ function CartItem ({ thumbnail, price, title, quantity, addToCart }) {
 export function Cart () {
   const cartCheckboxId = useId()
   const { cart, clearCart, addToCart } = useCart()
+
+
+  const totalPrice = cart.reduce((acc, product) => acc + product.price * product.quantity, 0)
 
   return (
     <>
@@ -46,10 +42,17 @@ export function Cart () {
             />
           ))}
         </ul>
+        
+        <div className='total-price'>
+          <strong>Total: ${totalPrice.toFixed(2)}</strong>
+        </div>
 
-        <button onClick={clearCart}>
-          <ClearCartIcon />
-        </button>
+        <div className='buttons-cart'>
+          <button onClick={clearCart}>
+            <ClearCartIcon />
+          </button>
+          <button className='go-to-payment'>Ir a Pagar</button>
+        </div>
       </aside>
     </>
   )

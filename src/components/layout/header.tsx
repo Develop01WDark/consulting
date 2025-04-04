@@ -50,13 +50,6 @@ export default function Header() {
             </ul>
           </div>
           <div className="container-header__info--icons">
-            {/* Carrito de Compras */}
-            <div className="cart-icon" onClick={() => navigate('/cart')} style={{ cursor: 'pointer', position: 'relative' }}>
-              <FontAwesomeIcon icon={faShoppingCart} style={{ color: "#973A4B" }} />
-              {cartCount > 0 && (
-                <span className="cart-count">{cartCount}</span>
-              )}
-            </div>
             {/* Barra de Búsqueda */}
             <div className="container-header__info--search">
               <form className={`container-header__info--search--form ${search ? 'active' : ''}`}>
